@@ -1,48 +1,26 @@
-import { Produto } from '..types';
+import { Produto } from '../types';
 
 export const produtos: Produto[] = [
   {
-    id: 1,
-    nome: "Produto Teste Python",
-    descricao: "Esse é um produto teste",
-    preco: 119.1,
-    categoria: "camisa",
-    estampa: 1,
-    
-    tamanhos: ["P", "M", "G", "GG"],
-    imagemUrl: "https://via.placeholder.com/400x400"
-  },
-  {
-    id: 2,
-    nome: "Camisa TESTE",
-    descricao: "Essa camisa é para teste",
-    preco: 100.0,
-    categoria: "oversized",
-    estampa: 0,
-    
-    tamanhos: ["P", "M", "G", "GG"],
-    imagemUrl: "https://via.placeholder.com/400x400"
-  },
-  {
-    id: 3,
-    nome: "Teste",
-    descricao: "teste",
-    preco: 100.0,
-    categoria: "oversized",
-    estampa: 0,
-    
-    tamanhos: ["M"],
-    imagemUrl: "https://via.placeholder.com/400x400"
-  },
-  {
-    id: 4,
-    nome: "Camisa Oversized Jesus é King",
-    descricao: "Camisa muito boa",
+    id: 7,
+    nome: "Oversized Jesus is king",
+    descricao: "Camisa de algodão",
     preco: 110.0,
     categoria: "oversized",
-    estampa: 1,
+    estampa: 0,
     
     tamanhos: ["P", "M", "G", "GG"],
+    imagemUrl: "n"
+  },
+  {
+    id: 8,
+    nome: "Oversized 70x7 Marrom",
+    descricao: "Cor Marrom, tecido otimo",
+    preco: 109.99,
+    categoria: "oversized",
+    estampa: 1,
+    
+    tamanhos: ["P", "M", "G"],
     imagemUrl: "https://via.placeholder.com/400x400"
   },
 ];
