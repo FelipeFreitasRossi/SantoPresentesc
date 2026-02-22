@@ -46,7 +46,7 @@ export const produtos: Produto[] = [
     
     # Caminho para o arquivo no projeto Expo
     # Ajuste este caminho conforme sua estrutura
-    caminho_destino = r"C:\Users\User\Desktop\SantoPresente\app-expo\app\data\produtos.ts"    
+    caminho_destino = r"C:\Users\User\Desktop\SantoPresentesc\app-expo\app\data\produtos.ts"    
     try:
         with open(caminho_destino, 'w', encoding='utf-8') as f:
             f.write(ts_content)
