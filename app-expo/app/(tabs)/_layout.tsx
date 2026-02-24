@@ -17,9 +17,34 @@ export default function TabsLayout() {
         },
       }}
     >
-      <Tabs.Screen name="index" options={{ title: 'Início', tabBarIcon: ({ color, size }) => <Feather name="home" size={size} color={color} /> }} />
-      <Tabs.Screen name="produtos" options={{ title: 'Produtos', tabBarIcon: ({ color, size }) => <Feather name="shopping-bag" size={size} color={color} /> }} />
-      <Tabs.Screen name="ajuda" options={{ title: 'Ajuda', tabBarIcon: ({ color, size }) => <Feather name="help-circle" size={size} color={color} /> }} />
+      <Tabs.Screen
+        name="index"
+        options={{
+          title: 'Início',
+          tabBarIcon: ({ color, size }) => <Feather name="home" size={size} color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="produtos"
+        options={{
+          title: 'Produtos',
+          tabBarIcon: ({ color, size }) => <Feather name="shopping-bag" size={size} color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="looks"             
+        options={{
+          title: 'Looks',
+          tabBarIcon: ({ color, size }) => <Feather name="camera" size={size} color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="ajuda"
+        options={{
+          title: 'Ajuda',
+          tabBarIcon: ({ color, size }) => <Feather name="help-circle" size={size} color={color} />,
+        }}
+      />
     </Tabs>
   );
 }

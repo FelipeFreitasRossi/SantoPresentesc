@@ -11,6 +11,7 @@ import {
   StatusBar,
 } from 'react-native';
 import { produtos, Produto } from '../data/produtos';
+import { looks } from '../data/looks';              
 import { Linking } from 'expo-linking';
 import { Feather } from '@expo/vector-icons';
 import { router } from 'expo-router';
@@ -25,46 +26,43 @@ import { useScrollToTop } from '../hooks/useScrollToTop';
 const { width } = Dimensions.get('window');
 const SIDEBAR_WIDTH = width * 0.75;
 
-const carrosselImages = [
-  { id: '1', image: 'https://images.unsplash.com/photo-1618354691373-d851c5c3a990?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80', titulo: 'Oversized', subtitulo: 'Conforto e estilo' },
-  { id: '2', image: 'https://images.unsplash.com/photo-1556905055-8f358a7a47b2?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80', titulo: 'Moletons', subtitulo: 'Aconchegantes' },
-  { id: '3', image: 'https://images.unsplash.com/photo-1576566588028-4147f3842f27?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80', titulo: 'Camisas', subtitulo: 'Fé em cada detalhe' },
-];
-
 const categorias = [
-  { id: '1', nome: 'Oversized', icone: '👕', cor: '#FF6B6B' },
-  { id: '2', nome: 'Moletons', icone: '🧥', cor: '#4ECDC4' },
-  { id: '3', nome: 'Camisas', icone: '👔', cor: '#FFD166' },
-  { id: '4', nome: 'Babylooks', icone: '👶', cor: '#A8D5E5' },
+  { id: '1', nome: 'Oversized', imagem: 'https://i.postimg.cc/cJ5pzQSh/Oversized-King.jpg', rota: 'oversized' },
+  { id: '2', nome: 'Moletons', imagem: 'https://i.postimg.cc/0NhrGKb2/Moletom.jpg', rota: 'moletom' },
+  { id: '3', nome: 'Camisas', imagem: 'https://images.unsplash.com/photo-1618354691373-d851c5c3a990?w=200&h=200&fit=crop', rota: 'camisa' },
+  { id: '4', nome: 'Babylooks', imagem: 'https://images.unsplash.com/photo-1522771930-78848d9293e8?w=200&h=200&fit=crop', rota: 'babylook' },
 ];
 
-const BannerCarrossel = memo(() => {
+const LooksCarrossel = memo(() => {
   const [activePage, setActivePage] = useState(0);
   const pagerRef = useRef<PagerView>(null);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      const nextPage = (activePage + 1) % carrosselImages.length;
+      const nextPage = (activePage + 1) % looks.length;
       pagerRef.current?.setPage(nextPage);
-    }, 3000);
+    }, 4000);
     return () => clearInterval(interval);
   }, [activePage]);
 
+  if (!looks.length) return null; 
+
   return (
     <View style={styles.carrosselContainer}>
-      <PagerView ref={pagerRef} style={styles.pagerView} initialPage={0} onPageSelected={(e) => setActivePage(e.nativeEvent.position)}>
-        {carrosselImages.map((item) => (
-          <View key={item.id} style={styles.page}>
-            <Image source={{ uri: item.image }} style={styles.carrosselImage} />
-            <View style={styles.overlay}>
-              <Text style={styles.carrosselTitulo}>{item.titulo}</Text>
-              <Text style={styles.carrosselSubtitulo}>{item.subtitulo}</Text>
-            </View>
+      <PagerView
+        ref={pagerRef}
+        style={styles.pagerView}
+        initialPage={0}
+        onPageSelected={(e) => setActivePage(e.nativeEvent.position)}
+      >
+        {looks.map((look) => (
+          <View key={look.id} style={styles.page}>
+            <Image source={{ uri: look.imagemUrl }} style={styles.carrosselImage} />
           </View>
         ))}
       </PagerView>
       <View style={styles.pagination}>
-        {carrosselImages.map((_, index) => (
+        {looks.map((_, index) => (
           <TouchableOpacity
             key={index}
             style={[styles.dot, index === activePage ? styles.dotActive : styles.dotInactive]}
@@ -78,6 +76,11 @@ const BannerCarrossel = memo(() => {
 
 const Categorias = memo(() => {
   const { theme } = useTheme();
+
+  const handleCategoriaPress = (rota: string) => {
+    router.push(`/produtos?categoria=${rota}`);
+  };
+
   return (
     <Animated.View entering={FadeInDown.delay(200).duration(600)} style={[styles.categoriasContainer, { backgroundColor: theme.background }]}>
       <Text style={[styles.sectionTitle, { color: theme.text }]}>Categorias</Text>
@@ -87,11 +90,9 @@ const Categorias = memo(() => {
         keyExtractor={(item) => item.id}
         renderItem={({ item, index }) => (
           <Animated.View entering={FadeInDown.delay(300 + index * 100).duration(500)}>
-            <TouchableOpacity style={styles.categoriaItem}>
-              <View style={[styles.categoriaIcon, { backgroundColor: item.cor + '20' }]}>
-                <Text style={styles.categoriaIconText}>{item.icone}</Text>
-              </View>
-              <Text style={[styles.categoriaNome, { color: theme.textSecondary }]}>{item.nome}</Text>
+            <TouchableOpacity style={styles.categoriaItem} onPress={() => handleCategoriaPress(item.rota)}>
+              <Image source={{ uri: item.imagem }} style={styles.categoriaImagem} />
+              <Text style={[styles.categoriaNome, { color: theme.text }]}>{item.nome}</Text>
             </TouchableOpacity>
           </Animated.View>
         )}
@@ -154,7 +155,7 @@ export default function HomeScreen() {
       <StatusBar barStyle={theme.statusBarStyle} backgroundColor={theme.headerBackground} />
       <CustomHeader
         onMenuPress={openSidebar}
-        logoSource={require('../../assets/images/Logo.png')} // CAMINHO DA LOGO
+        logoSource={require('../../assets/images/Logo.png')}
       />
       <FlatList
         ref={flatListRef}
@@ -163,7 +164,7 @@ export default function HomeScreen() {
         keyExtractor={(item) => item.id.toString()}
         ListHeaderComponent={
           <>
-            <BannerCarrossel />
+            <LooksCarrossel />
             <Categorias />
             <View style={[styles.produtosHeader, { backgroundColor: theme.background }]}>
               <Text style={[styles.sectionTitle, { color: theme.text }]}>Destaques</Text>
@@ -198,9 +199,6 @@ const styles = StyleSheet.create({
   pagerView: { flex: 1 },
   page: { flex: 1, borderRadius: 12, overflow: 'hidden', marginHorizontal: 16 },
   carrosselImage: { width: '100%', height: '100%', resizeMode: 'cover' },
-  overlay: { ...StyleSheet.absoluteFillObject, backgroundColor: 'rgba(0,0,0,0.2)', justifyContent: 'flex-end', padding: 16 },
-  carrosselTitulo: { color: '#fff', fontSize: 24, fontWeight: 'bold', textShadowColor: 'rgba(0,0,0,0.5)', textShadowOffset: { width: 1, height: 1 }, textShadowRadius: 4 },
-  carrosselSubtitulo: { color: '#fff', fontSize: 16, marginTop: 4, textShadowColor: 'rgba(0,0,0,0.5)', textShadowOffset: { width: 1, height: 1 }, textShadowRadius: 4 },
   pagination: { flexDirection: 'row', position: 'absolute', bottom: 10, alignSelf: 'center' },
   dot: { width: 8, height: 8, borderRadius: 4, marginHorizontal: 4 },
   dotActive: { backgroundColor: '#fff', width: 20 },
@@ -221,4 +219,22 @@ const styles = StyleSheet.create({
   cardButton: { flexDirection: 'row', alignItems: 'center', paddingVertical: 8, paddingHorizontal: 16, borderRadius: 24, gap: 6 },
   cardButtonText: { color: '#fff', fontWeight: '600', fontSize: 14 },
   overlay: { position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.5)', zIndex: 999 },
+  categoriaImagem: {
+  width: 70,
+  height: 70,
+  borderRadius: 35,
+  marginBottom: 8,
+  borderWidth: 2,
+  borderColor: '#fff',
+},
+  categoriaItem: {
+  alignItems: 'center',
+  marginRight: 16,
+  width: 80,
+},
+  categoriaNome: {
+  fontSize: 12,
+  fontWeight: '500',
+  textAlign: 'center',
+},
 });

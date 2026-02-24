@@ -6,7 +6,7 @@ import { useTheme } from '../context/ThemeContext';
 
 type Props = {
   onMenuPress: () => void;
-  logoSource?: ImageSourcePropType; // Aceita require ou { uri: string }
+  logoSource?: ImageSourcePropType;
 };
 
 export default function CustomHeader({ onMenuPress, logoSource }: Props) {

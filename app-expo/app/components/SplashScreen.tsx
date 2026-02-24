@@ -10,13 +10,11 @@ export default function SplashScreen({ onFinish }: Props) {
   const opacity = useSharedValue(0);
 
   useEffect(() => {
-    // Animação de fade-in
     opacity.value = withTiming(1, {
       duration: 500,
       easing: Easing.inOut(Easing.ease),
     });
 
-    // Timer para finalizar a splash
     const timer = setTimeout(() => {
       onFinish();
     }, 2000); // 2 segundos

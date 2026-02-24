@@ -1,4 +1,3 @@
-// app/components/Sidebar.tsx
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
 import Animated, { useAnimatedStyle, SharedValue } from 'react-native-reanimated';
@@ -21,47 +20,53 @@ export default function Sidebar({ translateX, onClose }: Props) {
 
   const navegarPara = (rota: string) => {
     onClose();
-    setTimeout(() => router.push(rota), 100);
+    setTimeout(() => router.push(rota), 150);
   };
+
+  const menuItens = [
+    { icone: 'home', label: 'Início', rota: '/(tabs)' },
+    { icone: 'shopping-bag', label: 'Produtos', rota: '/(tabs)/produtos' },
+    { icone: 'camera', label: 'Looks', rota: '/(tabs)/looks' },
+    { icone: 'help-circle', label: 'Ajuda', rota: '/(tabs)/ajuda' },
+  ];
 
   return (
     <Animated.View style={[styles.container, animatedStyle, { backgroundColor: theme.card }]}>
       <SafeAreaView style={styles.safeArea}>
+
         <View style={[styles.header, { borderBottomColor: theme.border }]}>
           <TouchableOpacity onPress={onClose} style={styles.closeButton}>
-            <Feather name="x" size={28} color={theme.text} />
+            <Feather name="x" size={24} color={theme.text} />
           </TouchableOpacity>
-          <Text style={[styles.title, { color: theme.text }]}>Menu</Text>
+          <Text style={[styles.headerTitle, { color: theme.text }]}>Menu</Text>
+          <View style={{ width: 40 }} />
         </View>
 
-        {/* Container principal com flex:1 e justifyContent space-between */}
-        <View style={styles.content}>
-          {/* Itens do menu principais */}
-          <View>
-            <TouchableOpacity style={styles.menuItem} onPress={() => navegarPara('/(tabs)')}>
-              <Feather name="home" size={22} color={theme.text} />
-              <Text style={[styles.menuText, { color: theme.text }]}>Início</Text>
+        <View style={styles.menuList}>
+          {menuItens.map((item) => (
+            <TouchableOpacity
+              key={item.rota}
+              style={styles.menuItem}
+              onPress={() => navegarPara(item.rota)}
+            >
+              <View style={[styles.iconCircle, { backgroundColor: theme.primary + '20' }]}>
+                <Feather name={item.icone} size={22} color={theme.primary} />
+              </View>
+              <Text style={[styles.menuLabel, { color: theme.text }]}>{item.label}</Text>
             </TouchableOpacity>
+          ))}
+        </View>
 
-            <TouchableOpacity style={styles.menuItem} onPress={() => navegarPara('/(tabs)/produtos')}>
-              <Feather name="shopping-bag" size={22} color={theme.text} />
-              <Text style={[styles.menuText, { color: theme.text }]}>Produtos</Text>
-            </TouchableOpacity>
+        <View style={[styles.divider, { backgroundColor: theme.border }]} />
 
-            <TouchableOpacity style={styles.menuItem} onPress={() => navegarPara('/(tabs)/ajuda')}>
-              <Feather name="help-circle" size={22} color={theme.text} />
-              <Text style={[styles.menuText, { color: theme.text }]}>Ajuda</Text>
-            </TouchableOpacity>
-          </View>
-
-          {/* Botão de tema no final */}
-          <TouchableOpacity style={styles.menuItem} onPress={toggleTheme}>
+        <TouchableOpacity style={styles.themeButton} onPress={toggleTheme}>
+          <View style={[styles.iconCircle, { backgroundColor: theme.text + '20' }]}>
             <Feather name={isDarkMode ? 'sun' : 'moon'} size={22} color={theme.text} />
-            <Text style={[styles.menuText, { color: theme.text }]}>
-              {isDarkMode ? 'Tema Claro' : 'Tema Escuro'}
-            </Text>
-          </TouchableOpacity>
-        </View>
+          </View>
+          <Text style={[styles.themeText, { color: theme.text }]}>
+            {isDarkMode ? 'Tema Claro' : 'Tema Escuro'}
+          </Text>
+        </TouchableOpacity>
       </SafeAreaView>
     </Animated.View>
   );
@@ -78,30 +83,42 @@ const styles = StyleSheet.create({
     elevation: 10,
     shadowColor: '#000',
     shadowOffset: { width: 2, height: 0 },
-    shadowOpacity: 0.3,
-    shadowRadius: 5,
+    shadowOpacity: 0.1,
+    shadowRadius: 10,
   },
   safeArea: { flex: 1 },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 20,
+    justifyContent: 'space-between',
+    paddingHorizontal: 20,
+    paddingVertical: 16,
     borderBottomWidth: 1,
   },
-  closeButton: { marginRight: 20 },
-  title: { fontSize: 20, fontWeight: 'bold' },
-  content: {
-    flex: 1,
-    justifyContent: 'space-between', // Isso separa os itens principais do botão de tema
-    paddingTop: 20,
-  },
+  closeButton: { padding: 8 },
+  headerTitle: { fontSize: 18, fontWeight: '600' },
+  menuList: { paddingTop: 20 },
   menuItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: 15,
+    paddingVertical: 12,
     paddingHorizontal: 20,
-    borderBottomWidth: 1,
-    borderBottomColor: '#333',
   },
-  menuText: { fontSize: 16, marginLeft: 15 },
+  iconCircle: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 16,
+  },
+  menuLabel: { fontSize: 16, fontWeight: '500' },
+  divider: { height: 1, marginVertical: 16, marginHorizontal: 20 },
+  themeButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+  },
+  themeText: { fontSize: 16, fontWeight: '500', marginLeft: 16 },
 });

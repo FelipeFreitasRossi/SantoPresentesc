@@ -45,15 +45,12 @@ const Footer = () => {
 
       <View style={[styles.infoSection, { backgroundColor: theme.background }]}>
         <Feather name="clock" size={16} color={theme.textSecondary} />
-        <Text style={[styles.infoText, { color: theme.text }]}>Atendimento: todos os dias, 7h às 20h</Text>
+        <Text style={[styles.infoText, { color: theme.text }]}>Atendimento: todos os dias: 7h às 20h</Text>
       </View>
 
       <View style={styles.linksRow}>
         <TouchableOpacity style={styles.linkItem} onPress={irParaAjuda}>
           <Text style={[styles.linkText, { color: theme.primary }]}>Ajuda</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.linkItem}>
-          <Text style={[styles.linkText, { color: theme.primary }]}>Contato</Text>
         </TouchableOpacity>
       </View>
 

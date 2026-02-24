@@ -14,7 +14,7 @@ import {
 import { produtos, Produto } from '../data/produtos';
 import { Linking } from 'expo-linking';
 import { Feather } from '@expo/vector-icons';
-import { router } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
 import Animated, { useSharedValue, withTiming, Easing, runOnJS } from 'react-native-reanimated';
 import CustomHeader from '../components/CustomHeader';
 import Sidebar from '../components/Sidebar';
@@ -31,18 +31,32 @@ const ListHeader = memo(({
   searchQuery,
   onSearchChange,
   onClearSearch,
-  resultCount
+  resultCount,
+  categoria,
 }: {
   searchQuery: string;
   onSearchChange: (text: string) => void;
   onClearSearch: () => void;
   resultCount: number;
+  categoria?: string;
 }) => {
   const inputRef = useRef<TextInput>(null);
   const { theme } = useTheme();
 
+  const categoriaNome = categoria ? categoria.charAt(0).toUpperCase() + categoria.slice(1) : '';
+
   return (
     <View style={[styles.headerContainer, { backgroundColor: theme.background }]}>
+      {categoria && (
+        <View style={[styles.categoriaTag, { backgroundColor: theme.primary + '20' }]}>
+          <Text style={[styles.categoriaTagText, { color: theme.primary }]}>
+            {categoriaNome}
+          </Text>
+          <TouchableOpacity onPress={() => router.setParams({ categoria: undefined })}>
+            <Feather name="x" size={18} color={theme.textSecondary} />
+          </TouchableOpacity>
+        </View>
+      )}
       <View style={[styles.searchWrapper, { backgroundColor: theme.card }]}>
         <Feather name="search" size={20} color={theme.textSecondary} style={styles.searchIcon} />
         <TextInput
@@ -105,15 +119,25 @@ export default function ProdutosScreen() {
   const translateX = useSharedValue(-SIDEBAR_WIDTH);
   const { theme } = useTheme();
   const flatListRef = useScrollToTop<FlatList<any>>();
+  const { categoria } = useLocalSearchParams<{ categoria?: string }>();
 
   const filteredProdutos = useMemo(() => {
-    if (!searchQuery.trim()) return produtos;
-    const query = searchQuery.toLowerCase().trim();
-    return produtos.filter(p =>
-      p.nome.toLowerCase().includes(query) ||
-      p.descricao.toLowerCase().includes(query)
-    );
-  }, [searchQuery]);
+    let resultado = produtos;
+
+    if (categoria) {
+      resultado = resultado.filter(p => p.categoria.toLowerCase() === categoria.toLowerCase());
+    }
+
+    if (searchQuery.trim()) {
+      const query = searchQuery.toLowerCase().trim();
+      resultado = resultado.filter(p =>
+        p.nome.toLowerCase().includes(query) ||
+        p.descricao.toLowerCase().includes(query)
+      );
+    }
+
+    return resultado;
+  }, [categoria, searchQuery]);
 
   const abrirWhatsApp = useCallback((produto: Produto) => {
     const numero = '5516997923532';
@@ -165,6 +189,7 @@ export default function ProdutosScreen() {
             onSearchChange={handleSearchChange}
             onClearSearch={handleClearSearch}
             resultCount={filteredProdutos.length}
+            categoria={categoria}
           />
         }
         ListEmptyComponent={ListEmpty}
@@ -206,4 +231,18 @@ const styles = StyleSheet.create({
   emptyText: { fontSize: 18, fontWeight: '600', marginTop: 16 },
   emptySubtext: { fontSize: 14, marginTop: 8 },
   overlay: { position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.5)', zIndex: 999 },
+  categoriaTag: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 20,
+    alignSelf: 'flex-start',
+    marginBottom: 12,
+    gap: 8,
+  },
+  categoriaTagText: {
+    fontSize: 14,
+    fontWeight: '600',
+  },
 });

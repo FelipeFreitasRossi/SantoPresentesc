@@ -2,17 +2,6 @@ import { Produto } from '../types';
 
 export const produtos: Produto[] = [
   {
-    id: 8,
-    nome: "Oversized Jesus Is King",
-    descricao: "Tecido de alta qualidade, aumente sua fé com os nossos melhores produtos",
-    preco: 109.99,
-    categoria: "oversized",
-    estampa: 1,
-    
-    tamanhos: ["P", "M", "G", "GG"],
-    imagemUrl: "https://i.postimg.cc/66hK6bvh/Oversized-Jesus-Is-King-Branca.jpg"
-  },
-  {
     id: 9,
     nome: "Oversized 70x7 Preta",
     descricao: "Tecido perfeito e otimo para usar no dia a dia, 100% algodão ",
