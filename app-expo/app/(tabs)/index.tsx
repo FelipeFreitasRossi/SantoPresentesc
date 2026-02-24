@@ -29,7 +29,7 @@ const SIDEBAR_WIDTH = width * 0.75;
 const categorias = [
   { id: '1', nome: 'Oversized', imagem: 'https://i.postimg.cc/cJ5pzQSh/Oversized-King.jpg', rota: 'oversized' },
   { id: '2', nome: 'Moletons', imagem: 'https://i.postimg.cc/0NhrGKb2/Moletom.jpg', rota: 'moletom' },
-  { id: '3', nome: 'Camisas', imagem: 'https://images.unsplash.com/photo-1618354691373-d851c5c3a990?w=200&h=200&fit=crop', rota: 'camisa' },
+  { id: '3', nome: 'Camisas', imagem: 'https://i.postimg.cc/7ZDn2V67/Camisa-Logo-Pai.jpg', rota: 'camisa' },
   { id: '4', nome: 'Babylooks', imagem: 'https://images.unsplash.com/photo-1522771930-78848d9293e8?w=200&h=200&fit=crop', rota: 'babylook' },
 ];
 
@@ -129,26 +129,30 @@ export default function HomeScreen() {
 
   const produtosDestaque = produtos.slice(0, 2);
 
-  const ProdutoCard = useCallback(({ item }: { item: Produto }) => (
-    <Animated.View entering={FadeInDown.delay(400).duration(600)}>
-      <Pressable onPress={() => router.push(`/produto/${item.id}`)}>
-        <View style={[styles.card, { backgroundColor: theme.card }]}>
-          <Image source={{ uri: item.imagemUrl }} style={styles.cardImage} />
-          <View style={styles.cardInfo}>
-            <Text style={[styles.cardNome, { color: theme.text }]}>{item.nome}</Text>
-            <Text style={[styles.cardDescricao, { color: theme.textSecondary }]} numberOfLines={2}>{item.descricao}</Text>
-            <View style={styles.cardFooter}>
-              <Text style={[styles.cardPreco, { color: theme.primary }]}>R$ {item.preco.toFixed(2)}</Text>
-              <TouchableOpacity style={[styles.cardButton, { backgroundColor: theme.accent }]} onPress={() => abrirWhatsApp(item)} activeOpacity={0.8}>
-                <Feather name="phone" size={18} color="#fff" />
-                <Text style={styles.cardButtonText}>Reservar</Text>
-              </TouchableOpacity>
-            </View>
+const ProdutoCard = useCallback(({ item }: { item: Produto }) => (
+  <Animated.View entering={FadeInDown.delay(400).duration(600)}>
+    <Pressable onPress={() => router.push(`/produto/${item.id}`)}>
+      <View style={[styles.card, { backgroundColor: theme.card }]}>
+        <Image source={{ uri: item.imagemUrl }} style={styles.cardImage} />
+        <View style={styles.cardInfo}>
+          <Text style={[styles.cardNome, { color: theme.text }]}>{item.nome}</Text>
+          <Text style={[styles.cardDescricao, { color: theme.textSecondary }]} numberOfLines={2}>{item.descricao}</Text>
+          <View style={styles.cardFooter}>
+            <Text style={[styles.cardPreco, { color: theme.primary }]}>R$ {item.preco.toFixed(2)}</Text>
+            <TouchableOpacity
+              style={[styles.cardButton, { backgroundColor: theme.primary }]}
+              onPress={() => router.push(`/produto/${item.id}`)}
+              activeOpacity={0.8}
+            >
+              <Feather name="eye" size={18} color="#fff" />
+              <Text style={styles.cardButtonText}>Ver produto</Text>
+            </TouchableOpacity>
           </View>
         </View>
-      </Pressable>
-    </Animated.View>
-  ), [abrirWhatsApp, theme]);
+      </View>
+    </Pressable>
+  </Animated.View>
+), [abrirWhatsApp, theme]);
 
   return (
     <View style={[styles.container, { backgroundColor: theme.background }]}>

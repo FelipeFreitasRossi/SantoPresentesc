@@ -67,4 +67,15 @@ export const produtos: Produto[] = [
     tamanhos: ["P", "M", "G", "GG"],
     imagemUrl: "https://i.postimg.cc/NF8jQgcv/Moletom-70x7Preta.jpg"
   },
+  {
+    id: 15,
+    nome: "Moletom Jesus Is King",
+    descricao: "Moletom da cor preta, tecido otimo e agradavel",
+    preco: 109.99,
+    categoria: "moletom",
+    estampa: 1,
+    capuz: 1,
+    tamanhos: ["P", "M", "G", "GG"],
+    imagemUrl: "https://i.postimg.cc/4xLwRcfj/Blusa-King-Preta.jpg"
+  },
 ];

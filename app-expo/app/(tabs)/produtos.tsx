@@ -94,7 +94,7 @@ const ListEmpty = memo(() => {
   );
 });
 
-const ProdutoCard = memo(({ item, onPressWhatsApp }: { item: Produto; onPressWhatsApp: (produto: Produto) => void }) => {
+const ProdutoCard = memo(({ item }: { item: Produto }) => {
   const { theme } = useTheme();
   return (
     <Pressable onPress={() => router.push(`/produto/${item.id}`)} style={styles.cardContainer}>
@@ -103,9 +103,13 @@ const ProdutoCard = memo(({ item, onPressWhatsApp }: { item: Produto; onPressWha
         <View style={styles.cardInfo}>
           <Text style={[styles.cardNome, { color: theme.text }]} numberOfLines={1}>{item.nome}</Text>
           <Text style={[styles.cardPreco, { color: theme.primary }]}>R$ {item.preco.toFixed(2)}</Text>
-          <TouchableOpacity style={[styles.cardButton, { backgroundColor: theme.accent }]} onPress={() => onPressWhatsApp(item)} activeOpacity={0.8}>
-            <Feather name="phone" size={14} color="#fff" />
-            <Text style={styles.cardButtonText}>Reservar</Text>
+          <TouchableOpacity
+            style={[styles.cardButton, { backgroundColor: theme.primary }]}
+            onPress={() => router.push(`/produto/${item.id}`)}
+            activeOpacity={0.8}
+          >
+            <Feather name="eye" size={14} color="#fff" />
+            <Text style={styles.cardButtonText}>Ver produto</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -174,7 +178,7 @@ export default function ProdutosScreen() {
       <StatusBar barStyle={theme.statusBarStyle} backgroundColor={theme.headerBackground} />
       <CustomHeader
         onMenuPress={openSidebar}
-        logoSource={require('../../assets/images/Logo.png')} // CAMINHO DA LOGO
+        logoSource={require('../../assets/images/Logo.png')}
       />
       <FlatList
         ref={flatListRef}

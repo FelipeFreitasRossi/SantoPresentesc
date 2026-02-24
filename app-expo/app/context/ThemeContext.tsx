@@ -11,7 +11,6 @@ type ThemeContextType = {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  // Sempre inicia com tema claro (false)
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   const toggleTheme = () => {
