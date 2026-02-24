@@ -22,10 +22,7 @@ export const produtos: Produto[] = [
 """
     
     for p in produtos:
-        # p[0]=id, p[1]=nome, p[2]=descricao, p[3]=preco, p[4]=categoria
-        # p[5]=estampa, p[6]=capuz, p[7]=tamanhos, p[8]=imagemUrl
-        
-        # Converter tamanhos de string para array
+
         tamanhos_array = p[7].split(',') if p[7] else ["P", "M", "G", "GG"]
         
         produto_ts = f"""  {{
@@ -92,3 +89,5 @@ if __name__ == "__main__":
     print("📤 Exportando produtos para o app...")
     exportar_para_typescript()
     exportar_para_json()
+
+
