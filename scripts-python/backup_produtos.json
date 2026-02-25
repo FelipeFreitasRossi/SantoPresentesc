@@ -49,7 +49,7 @@
   },
   {
     "id": 12,
-    "nome": "Moletom Jeus Is King Branca",
+    "nome": "Moletom Jesus Is King Branca",
     "descricao": "Moletom otimo com um tecido maravilhoso, leve e otimo para o frio",
     "preco": 119.99,
     "categoria": "moletom",
@@ -110,5 +110,21 @@
       "GG"
     ],
     "imagemUrl": "https://i.postimg.cc/4xLwRcfj/Blusa-King-Preta.jpg"
+  },
+  {
+    "id": 16,
+    "nome": "Camisa Maria",
+    "descricao": "Otima camisa, 100% algodão",
+    "preco": 64.99,
+    "categoria": "camisa",
+    "estampa": true,
+    "capuz": null,
+    "tamanhos": [
+      "P",
+      "M",
+      "G",
+      "GG"
+    ],
+    "imagemUrl": "https://i.postimg.cc/0rgs0Cyq/Guadalupe.jpg"
   }
 ]
