@@ -51,16 +51,9 @@ export default function AjudaScreen() {
     },
     {
       pergunta: 'Qual o prazo de entrega?',
-      resposta: 'O prazo varia de acordo com sua localização. Após a confirmação do pagamento, enviamos o código de rastreio por WhatsApp.',
+      resposta: 'O prazo varia de acordo com sua localização. Após a confirmação do pagamento, sairemos para entrega em até 3 dias úteis. O prazo total de entrega é de 7 a 15 dias úteis, dependendo da região.',
     },
-    {
-      pergunta: 'Posso trocar ou devolver um produto?',
-      resposta: 'Sim, você tem até 7 dias após o recebimento para solicitar troca ou devolução. Entre em contato pelo WhatsApp.',
-    },
-    {
-      pergunta: 'Como saber meu tamanho?',
-      resposta: 'Temos uma tabela de medidas disponível. Fale conosco no WhatsApp que enviamos as orientações.',
-    },
+
   ];
 
   return (
@@ -68,7 +61,7 @@ export default function AjudaScreen() {
       <StatusBar barStyle={theme.statusBarStyle} backgroundColor={theme.headerBackground} />
       <CustomHeader
         onMenuPress={openSidebar}
-        logoSource={require('../../assets/images/Logo.png')} // CAMINHO DA LOGO
+        logoSource={require('../../assets/images/Logo.png')} 
       />
       <ScrollView
         ref={scrollRef}

@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { View, Text, Image, StyleSheet, Pressable, Alert, ScrollView, Platform } from 'react-native';
+import { View, Text, Image, StyleSheet, Pressable, Alert, ScrollView, FlatList } from 'react-native';
 import { useLocalSearchParams, Stack } from 'expo-router';
 import { produtos } from '../data/produtos';
 import { Feather } from '@expo/vector-icons';
-import * as Linking from 'expo-linking'; // Melhor prática no Expo
+import * as Linking from 'expo-linking';
 import { useTheme } from '../context/ThemeContext';
 
 export default function DetalheProduto() {
@@ -11,6 +11,7 @@ export default function DetalheProduto() {
   const produto = produtos.find(p => p.id === Number(id));
   const [tamanhoSelecionado, setTamanhoSelecionado] = useState<string>('');
   const { theme } = useTheme();
+  const [imagemAtual, setImagemAtual] = useState(produto?.imagemUrl || '');
 
   if (!produto) {
     return (
@@ -28,30 +29,29 @@ export default function DetalheProduto() {
 
     const numero = '5516997923532';
     const mensagem = `Olá! Gostaria de reservar:\n*${produto.nome}*\nPreço: R$ ${produto.preco.toFixed(2)}\nTamanho: ${tamanhoSelecionado}`;
-    
-    // O link wa.me é o padrão universal que o iOS e Android reconhecem para abrir o app
     const url = `https://wa.me/${numero}?text=${encodeURIComponent(mensagem)}`;
 
     try {
-      // Verifica se o sistema consegue lidar com a URL
-      const podeAbrir = await Linking.canOpenURL(url);
-      
-      if (podeAbrir || Platform.OS === 'android') {
-        // No Android, canOpenURL às vezes retorna false mesmo funcionando, então tentamos abrir direto
-        await Linking.openURL(url);
-      } else {
-        Alert.alert(
-          'Erro',
-          'Não conseguimos abrir o WhatsApp. Verifique se o aplicativo está instalado no seu celular.'
-        );
-      }
+      await Linking.openURL(url);
     } catch (error) {
-      // Fallback: se falhar por qualquer motivo, tenta abrir no navegador
-      Linking.openURL(url).catch(() => {
-        Alert.alert('Erro', 'Não foi possível completar a ação.');
-      });
+      Alert.alert('Erro', 'Não foi possível abrir o WhatsApp. Verifique se o aplicativo está instalado.');
     }
   };
+
+  // Lista com todas as imagens (principal + adicionais)
+  const todasImagens = [produto.imagemUrl, ...(produto.imagensAdicionais || [])];
+
+  const renderMiniatura = ({ item }: { item: string }) => (
+    <Pressable onPress={() => setImagemAtual(item)}>
+      <Image
+        source={{ uri: item }}
+        style={[
+          styles.miniatura,
+          imagemAtual === item && styles.miniaturaAtiva,
+        ]}
+      />
+    </Pressable>
+  );
 
   return (
     <>
@@ -63,8 +63,20 @@ export default function DetalheProduto() {
         }}
       />
       <ScrollView style={[styles.container, { backgroundColor: theme.background }]}>
-        <Image source={{ uri: produto.imagemUrl }} style={styles.image} />
-        
+        <Image source={{ uri: imagemAtual }} style={styles.image} />
+
+        {/* Miniaturas (só aparece se houver mais de uma imagem) */}
+        {todasImagens.length > 1 && (
+          <FlatList
+            data={todasImagens}
+            renderItem={renderMiniatura}
+            keyExtractor={(item, index) => index.toString()}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.miniaturasContainer}
+          />
+        )}
+
         <View style={styles.info}>
           <Text style={[styles.nome, { color: theme.text }]}>{produto.nome}</Text>
           <Text style={[styles.descricao, { color: theme.textSecondary }]}>{produto.descricao}</Text>
@@ -96,7 +108,7 @@ export default function DetalheProduto() {
           </View>
 
           <Pressable
-            style={[styles.button, { backgroundColor: '#25D366' }]} // Cor oficial do WhatsApp
+            style={[styles.button, { backgroundColor: '#25D366' }]}
             onPress={abrirWhatsApp}
           >
             <Feather name="phone" size={20} color="#fff" />
@@ -112,6 +124,18 @@ const styles = StyleSheet.create({
   container: { flex: 1 },
   centered: { flex: 1, justifyContent: 'center', alignItems: 'center' },
   image: { width: '100%', height: 350, resizeMode: 'cover' },
+  miniaturasContainer: { paddingHorizontal: 16, paddingVertical: 8, gap: 8 },
+  miniatura: {
+    width: 70,
+    height: 70,
+    borderRadius: 8,
+    marginRight: 8,
+    borderWidth: 2,
+    borderColor: 'transparent',
+  },
+  miniaturaAtiva: {
+    borderColor: '#25D366',
+  },
   info: { padding: 20 },
   nome: { fontSize: 26, fontWeight: 'bold', marginBottom: 8 },
   descricao: { fontSize: 16, marginBottom: 16, lineHeight: 22 },
@@ -126,9 +150,7 @@ const styles = StyleSheet.create({
     minWidth: 60,
     alignItems: 'center',
   },
-  tamanhoSelecionado: {
-    backgroundColor: '#25D366',
-  },
+  tamanhoSelecionado: { backgroundColor: '#25D366' },
   tamanhoTexto: { fontSize: 16, fontWeight: '600' },
   tamanhoTextoSelecionado: { color: '#fff' },
   button: {
@@ -138,7 +160,7 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
     borderRadius: 12,
     gap: 10,
-    elevation: 2, 
+    elevation: 2,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
