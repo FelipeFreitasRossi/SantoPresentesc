@@ -78,15 +78,4 @@ export const produtos: Produto[] = [
     tamanhos: ["P", "M", "G", "GG"],
     imagemUrl: "https://i.postimg.cc/4xLwRcfj/Blusa-King-Preta.jpg"
   },
-  {
-    id: 16,
-    nome: "Camisa Maria",
-    descricao: "Otima camisa, 100% algodão",
-    preco: 64.99,
-    categoria: "camisa",
-    estampa: 1,
-    
-    tamanhos: ["P", "M", "G", "GG"],
-    imagemUrl: "https://i.postimg.cc/0rgs0Cyq/Guadalupe.jpg"
-  },
 ];

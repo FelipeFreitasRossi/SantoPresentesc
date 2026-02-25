@@ -42,7 +42,7 @@ export default function LooksScreen() {
       <StatusBar barStyle={theme.statusBarStyle} backgroundColor={theme.headerBackground} />
       <CustomHeader
         onMenuPress={openSidebar}
-        logoSource={require('../../assets/images/Logo.png')} // mesmo caminho da logo
+        logoSource={require('../../assets/images/Logo.png')}
       />
       <FlatList
         ref={flatListRef}

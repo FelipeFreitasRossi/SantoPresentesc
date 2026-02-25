@@ -138,7 +138,6 @@ const Beneficios = memo(() => {
   );
 });
 
-// Depoimentos com rolagem apenas automática (scrollEnabled=false)
 const Depoimentos = memo(() => {
   const { theme } = useTheme();
   const [activeIndex, setActiveIndex] = useState(0);
@@ -304,8 +303,6 @@ const DestaquesCarrossel = memo(() => {
   );
 });
 
-// ==================== TELA PRINCIPAL ====================
-
 export default function HomeScreen() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const translateX = useSharedValue(-SIDEBAR_WIDTH);
@@ -359,8 +356,6 @@ export default function HomeScreen() {
   );
 }
 
-// ==================== ESTILOS ====================
-
 const styles = StyleSheet.create({
   container: { flex: 1 },
   listContent: { paddingBottom: 0 },
@@ -374,7 +369,6 @@ const styles = StyleSheet.create({
     zIndex: 999,
   },
 
-  // Looks Carrossel
 looksCarrosselContainer: { height: 220, marginBottom: 16 },
 lookItem: { width: Dimensions.get('window').width, height: 220 },
 lookImage: { width: '100%', height: '100%', resizeMode: 'cover' },
@@ -383,21 +377,18 @@ looksPagination: { flexDirection: 'row', justifyContent: 'center', marginTop: 8 
 looksDot: { width: 6, height: 6, borderRadius: 3, marginHorizontal: 4 },
 looksDotActive: { width: 12 },
 
-  // Benefícios
   beneficiosContainer: { marginBottom: 16 },
   beneficiosList: { paddingHorizontal: 16, gap: 16 },
   beneficioItem: { alignItems: 'center', width: 100 },
   beneficioIcone: { width: 50, height: 50, borderRadius: 25, justifyContent: 'center', alignItems: 'center', marginBottom: 6 },
   beneficioTexto: { fontSize: 12, textAlign: 'center' },
 
-  // Categorias
   categoriasContainer: { marginBottom: 16, paddingHorizontal: 16 },
   categoriasList: {},
   categoriaItem: { alignItems: 'center', marginRight: 16, width: 80 },
   categoriaImagem: { width: 70, height: 70, borderRadius: 35, marginBottom: 8, borderWidth: 2, borderColor: '#fff' },
   categoriaNome: { fontSize: 12, fontWeight: '500', textAlign: 'center' },
 
-  // Banner único
   bannerUnico: {
     height: 250,
     marginHorizontal: 15,
@@ -429,7 +420,6 @@ looksDotActive: { width: 12 },
     textShadowRadius: 4,
   },
 
-  // Depoimentos
   depoimentosContainer: { marginBottom: 16, paddingHorizontal: 16 },
   depoimentoCard: {
     marginHorizontal: 2,
@@ -459,7 +449,6 @@ looksDotActive: { width: 12 },
   depoimentoDot: { width: 6, height: 6, borderRadius: 3, marginHorizontal: 4 },
   depoimentoDotActive: { width: 12 },
 
-  // Destaques carrossel
   destaquesContainer: { marginBottom: 16, paddingHorizontal: 16 },
   destaquesList: { gap: 12 },
   destaqueCard: { width: 140, marginRight: 8 },
