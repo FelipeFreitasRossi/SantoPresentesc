@@ -1,3 +1,4 @@
+
 export type Look = {
   id: number;
   imagemUrl: string;

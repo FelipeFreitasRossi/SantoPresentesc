@@ -24,7 +24,6 @@ import { useScrollToTop } from '../hooks/useScrollToTop';
 const { width } = Dimensions.get('window');
 const SIDEBAR_WIDTH = width * 0.75;
 
-// Dados mockados para benefícios
 const beneficios = [
   { id: 'b1', icone: 'truck', texto: 'Frete Grátis*' },
   { id: 'b2', icone: 'refresh-cw', texto: 'Troca Fácil' },
@@ -33,7 +32,7 @@ const beneficios = [
 ];
 
 const depoimentos = [
-  { id: 'd1', nome: 'Pedro Alves', texto: 'Amei minha camisa! Super confortável e entrega rápida.', nota: 5 },
+  { id: 'd1', nome: 'Pedro Ferreira', texto: 'Gostei muito das camisetas, particularmente as oversized são muito boas, tecido, designe e estampas\nO atendimento foi ótimo e direto nas minhas opções, agradeço pelo produto de qualidade e com certeza vou comprar mais!', nota: 5 },
   { id: 'd2', nome: 'João Pedro', texto: 'Produto de excelente qualidade, já quero comprar mais!', nota: 5 },
   { id: 'd3', nome: 'Gustavo Henrique', texto: 'Atendimento maravilhoso e tecidos incríveis.', nota: 5 },
 ];
@@ -45,9 +44,6 @@ const categorias = [
   { id: '4', nome: 'Babylooks', imagem: 'https://images.unsplash.com/photo-1522771930-78848d9293e8?w=200&h=200&fit=crop', rota: 'babylook' },
 ];
 
-// ==================== COMPONENTES ====================
-
-// Carrossel de looks adaptado para web (sem PagerView)
 const LooksCarrossel = memo(() => {
   const [activeIndex, setActiveIndex] = useState(0);
   const flatListRef = useRef<FlatList>(null);
@@ -69,19 +65,19 @@ const LooksCarrossel = memo(() => {
 
   if (!looks.length) return null;
 
-  const renderItem = ({ item }: { item: typeof looks[0] }) => (
+  const renderItem = useCallback(({ item }: { item: typeof looks[0] }) => (
     <View style={styles.lookItem}>
       <Image source={{ uri: item.imagemUrl }} style={styles.lookImage} />
     </View>
-  );
+  ), []);
 
-  const onScroll = (event: any) => {
+  const onScroll = useCallback((event: any) => {
     const contentOffset = event.nativeEvent.contentOffset.x;
     const index = Math.round(contentOffset / (width - 32));
-    if (index !== activeIndex) {
+    if (index !== activeIndex && index >= 0 && index < looks.length) {
       setActiveIndex(index);
     }
-  };
+  }, [activeIndex]);
 
   return (
     <View style={styles.looksCarrosselContainer}>
@@ -113,23 +109,25 @@ const LooksCarrossel = memo(() => {
   );
 });
 
-// Seção de Benefícios
 const Beneficios = memo(() => {
   const { theme } = useTheme();
+
+  const renderItem = useCallback(({ item }: { item: typeof beneficios[0] }) => (
+    <View style={styles.beneficioItem}>
+      <View style={[styles.beneficioIcone, { backgroundColor: theme.primary + '20' }]}>
+        <Feather name={item.icone} size={24} color={theme.primary} />
+      </View>
+      <Text style={[styles.beneficioTexto, { color: theme.textSecondary }]}>{item.texto}</Text>
+    </View>
+  ), [theme.primary, theme.textSecondary]);
+
   return (
     <View style={styles.beneficiosContainer}>
       <FlatList
         horizontal
         data={beneficios}
         keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <View style={styles.beneficioItem}>
-            <View style={[styles.beneficioIcone, { backgroundColor: theme.primary + '20' }]}>
-              <Feather name={item.icone} size={24} color={theme.primary} />
-            </View>
-            <Text style={[styles.beneficioTexto, { color: theme.textSecondary }]}>{item.texto}</Text>
-          </View>
-        )}
+        renderItem={renderItem}
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={styles.beneficiosList}
       />
@@ -137,7 +135,6 @@ const Beneficios = memo(() => {
   );
 });
 
-// Seção de Depoimentos (centralizada)
 const Depoimentos = memo(() => {
   const { theme } = useTheme();
   const [activeIndex, setActiveIndex] = useState(0);
@@ -156,35 +153,44 @@ const Depoimentos = memo(() => {
     return () => clearInterval(interval);
   }, [activeIndex]);
 
-  const renderItem = ({ item }: { item: typeof depoimentos[0] }) => (
+  const getInitials = useCallback((name: string) => {
+    return name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+  }, []);
+
+  const renderItem = useCallback(({ item }: { item: typeof depoimentos[0] }) => (
     <View style={[styles.depoimentoCard, { backgroundColor: theme.card }]}>
-      <View style={[styles.depoimentoAvatar, { backgroundColor: theme.primary + '20' }]}>
-        <Feather name="user" size={28} color={theme.primary} />
-      </View>
-      <Text style={[styles.depoimentoNome, { color: theme.text }]}>{item.nome}</Text>
-      <View style={styles.depoimentoEstrelas}>
-        {[...Array(5)].map((_, i) => (
-          <Feather
-            key={i}
-            name="star"
-            size={16}
-            color={i < item.nota ? '#FFD700' : theme.border}
-          />
-        ))}
+      <View style={styles.depoimentoHeader}>
+        <View style={[styles.depoimentoAvatar, { backgroundColor: theme.primary }]}>
+          <Text style={styles.depoimentoAvatarText}>{getInitials(item.nome)}</Text>
+        </View>
+        <View style={styles.depoimentoInfo}>
+          <Text style={[styles.depoimentoNome, { color: theme.text }]}>{item.nome}</Text>
+          <View style={styles.depoimentoEstrelas}>
+            {[...Array(5)].map((_, i) => (
+              <Feather
+                key={i}
+                name="star"
+                size={16}
+                color={i < item.nota ? '#FFD700' : theme.border}
+                style={{ marginRight: 2 }}
+              />
+            ))}
+          </View>
+        </View>
       </View>
       <Text style={[styles.depoimentoTexto, { color: theme.textSecondary }]}>
         "{item.texto}"
       </Text>
     </View>
-  );
+  ), [theme.card, theme.primary, theme.text, theme.textSecondary, theme.border, getInitials]);
 
-  const onScroll = (e: any) => {
+  const onScroll = useCallback((e: any) => {
     const offset = e.nativeEvent.contentOffset.x;
     const index = Math.round(offset / width);
-    if (index !== activeIndex) {
+    if (index !== activeIndex && index >= 0 && index < depoimentos.length) {
       setActiveIndex(index);
     }
-  };
+  }, [activeIndex]);
 
   return (
     <View style={styles.depoimentosContainer}>
@@ -216,7 +222,6 @@ const Depoimentos = memo(() => {
   );
 });
 
-// Banner único com imagem e texto sobreposto
 const BannerUnico = memo(() => {
   return (
     <View style={styles.bannerUnico}>
@@ -232,13 +237,21 @@ const BannerUnico = memo(() => {
   );
 });
 
-// Categorias
 const Categorias = memo(() => {
   const { theme } = useTheme();
 
-  const handleCategoriaPress = (rota: string) => {
+  const handleCategoriaPress = useCallback((rota: string) => {
     router.push(`/produtos?categoria=${rota}`);
-  };
+  }, []);
+
+  const renderItem = useCallback(({ item, index }: { item: typeof categorias[0]; index: number }) => (
+    <Animated.View entering={FadeInDown.delay(300 + index * 100).duration(500)}>
+      <TouchableOpacity style={styles.categoriaItem} onPress={() => handleCategoriaPress(item.rota)}>
+        <Image source={{ uri: item.imagem }} style={styles.categoriaImagem} />
+        <Text style={[styles.categoriaNome, { color: theme.text }]}>{item.nome}</Text>
+      </TouchableOpacity>
+    </Animated.View>
+  ), [theme.text, handleCategoriaPress]);
 
   return (
     <Animated.View entering={FadeInDown.delay(200).duration(600)} style={[styles.categoriasContainer, { backgroundColor: theme.background }]}>
@@ -247,14 +260,7 @@ const Categorias = memo(() => {
         horizontal
         data={categorias}
         keyExtractor={(item) => item.id}
-        renderItem={({ item, index }) => (
-          <Animated.View entering={FadeInDown.delay(300 + index * 100).duration(500)}>
-            <TouchableOpacity style={styles.categoriaItem} onPress={() => handleCategoriaPress(item.rota)}>
-              <Image source={{ uri: item.imagem }} style={styles.categoriaImagem} />
-              <Text style={[styles.categoriaNome, { color: theme.text }]}>{item.nome}</Text>
-            </TouchableOpacity>
-          </Animated.View>
-        )}
+        renderItem={renderItem}
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={styles.categoriasList}
       />
@@ -262,12 +268,26 @@ const Categorias = memo(() => {
   );
 });
 
-// Carrossel de produtos em destaque
 const DestaquesCarrossel = memo(() => {
   const { theme } = useTheme();
   const destaques = produtos.slice(0, 5);
 
   if (!destaques.length) return null;
+
+  const renderItem = useCallback(({ item }: { item: typeof produtos[0] }) => (
+    <TouchableOpacity
+      style={styles.destaqueCard}
+      onPress={() => router.push(`/produto/${item.id}`)}
+    >
+      <Image source={{ uri: item.imagemUrl }} style={styles.destaqueImage} />
+      <Text style={[styles.destaqueNome, { color: theme.text }]} numberOfLines={1}>
+        {item.nome}
+      </Text>
+      <Text style={[styles.destaquePreco, { color: theme.primary }]}>
+        R$ {item.preco.toFixed(2)}
+      </Text>
+    </TouchableOpacity>
+  ), [theme.text, theme.primary]);
 
   return (
     <View style={styles.destaquesContainer}>
@@ -276,20 +296,7 @@ const DestaquesCarrossel = memo(() => {
         horizontal
         data={destaques}
         keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => (
-          <TouchableOpacity
-            style={styles.destaqueCard}
-            onPress={() => router.push(`/produto/${item.id}`)}
-          >
-            <Image source={{ uri: item.imagemUrl }} style={styles.destaqueImage} />
-            <Text style={[styles.destaqueNome, { color: theme.text }]} numberOfLines={1}>
-              {item.nome}
-            </Text>
-            <Text style={[styles.destaquePreco, { color: theme.primary }]}>
-              R$ {item.preco.toFixed(2)}
-            </Text>
-          </TouchableOpacity>
-        )}
+        renderItem={renderItem}
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={styles.destaquesList}
       />
@@ -367,7 +374,7 @@ const styles = StyleSheet.create({
     zIndex: 999,
   },
 
-  // Looks Carrossel (novo estilo)
+  // Looks Carrossel
   looksCarrosselContainer: { height: 220, marginBottom: 16 },
   lookItem: { width: width - 32, marginHorizontal: 16, borderRadius: 12, overflow: 'hidden' },
   lookImage: { width: '100%', height: '100%', resizeMode: 'cover' },
@@ -425,30 +432,31 @@ const styles = StyleSheet.create({
   // Depoimentos
   depoimentosContainer: { marginBottom: 16, paddingHorizontal: 16 },
   depoimentoCard: {
-    width: width - 32,
+    width: width -65,
     marginHorizontal: 16,
-    borderRadius: 12,
+    borderRadius: 16,
     padding: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+    shadowRadius: 8,
+    elevation: 4,
   },
+  depoimentoHeader: { flexDirection: 'row', alignItems: 'center', marginBottom: 12 },
   depoimentoAvatar: {
-    width: 56,
-    height: 56,
-    borderRadius: 28,
+    width: 50,
+    height: 50,
+    borderRadius: 25,
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 12,
+    marginRight: 12,
   },
-  depoimentoNome: { fontSize: 16, fontWeight: '600', marginBottom: 4, textAlign: 'center' },
-  depoimentoEstrelas: { flexDirection: 'row', marginBottom: 12 },
-  depoimentoTexto: { fontSize: 14, fontStyle: 'italic', textAlign: 'center', lineHeight: 20 },
-  depoimentoPagination: { flexDirection: 'row', justifyContent: 'center', marginTop: 8 },
+  depoimentoAvatarText: { color: '#fff', fontSize: 18, fontWeight: 'bold' },
+  depoimentoInfo: { flex: 1 },
+  depoimentoNome: { fontSize: 16, fontWeight: '600', marginBottom: 2 },
+  depoimentoEstrelas: { flexDirection: 'row' },
+  depoimentoTexto: { fontSize: 14, fontStyle: 'italic', lineHeight: 20, textAlign: 'left' },
+  depoimentoPagination: { flexDirection: 'row', justifyContent: 'center', marginTop: 12 },
   depoimentoDot: { width: 6, height: 6, borderRadius: 3, marginHorizontal: 4 },
   depoimentoDotActive: { width: 12 },
 
