@@ -34,7 +34,7 @@ const beneficios = [
 const depoimentos = [
   { id: 'd1', nome: 'Pedro Ferreira', texto: 'Gostei muito das camisetas, particularmente as oversized são muito boas, tecido, designe e estampas\nO atendimento foi ótimo e direto nas minhas opções, agradeço pelo produto de qualidade e com certeza vou comprar mais!', nota: 5 },
   { id: 'd2', nome: 'João Pedro', texto: 'Produto de excelente qualidade, já quero comprar mais!', nota: 5 },
-  { id: 'd3', nome: 'Gustavo Henrique', texto: 'Atendimento maravilhoso e tecidos incríveis.', nota: 5 },
+  { id: 'd3', nome: 'Gustavo Rocha', texto: 'O atendimento é excelente, principalmente a velocidade e precisão, mas o que mais se destaca são os ótimos preços condizentes com a ótima qualidade das camisas!!', nota: 5 },
 ];
 
 const categorias = [
@@ -73,7 +73,7 @@ const LooksCarrossel = memo(() => {
 
   const onScroll = useCallback((event: any) => {
     const contentOffset = event.nativeEvent.contentOffset.x;
-    const index = Math.round(contentOffset / (width - 32));
+    const index = Math.round(contentOffset / width);
     if (index !== activeIndex && index >= 0 && index < looks.length) {
       setActiveIndex(index);
     }
@@ -85,12 +85,15 @@ const LooksCarrossel = memo(() => {
         ref={flatListRef}
         data={looks}
         horizontal
-        pagingEnabled
+        scrollEnabled={false}
         showsHorizontalScrollIndicator={false}
         keyExtractor={(item) => item.id.toString()}
         renderItem={renderItem}
         onScroll={onScroll}
         scrollEventThrottle={16}
+        snapToInterval={width}
+        snapToAlignment="start"
+        decelerationRate="fast"
         contentContainerStyle={styles.looksList}
       />
       <View style={styles.looksPagination}>
@@ -135,10 +138,12 @@ const Beneficios = memo(() => {
   );
 });
 
+// Depoimentos com rolagem apenas automática (scrollEnabled=false)
 const Depoimentos = memo(() => {
   const { theme } = useTheme();
   const [activeIndex, setActiveIndex] = useState(0);
   const flatListRef = useRef<FlatList>(null);
+  const [itemWidth, setItemWidth] = useState(width - 32);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -158,7 +163,7 @@ const Depoimentos = memo(() => {
   }, []);
 
   const renderItem = useCallback(({ item }: { item: typeof depoimentos[0] }) => (
-    <View style={[styles.depoimentoCard, { backgroundColor: theme.card }]}>
+    <View style={[styles.depoimentoCard, { width: itemWidth, backgroundColor: theme.card }]}>
       <View style={styles.depoimentoHeader}>
         <View style={[styles.depoimentoAvatar, { backgroundColor: theme.primary }]}>
           <Text style={styles.depoimentoAvatarText}>{getInitials(item.nome)}</Text>
@@ -182,29 +187,24 @@ const Depoimentos = memo(() => {
         "{item.texto}"
       </Text>
     </View>
-  ), [theme.card, theme.primary, theme.text, theme.textSecondary, theme.border, getInitials]);
+  ), [theme.card, theme.primary, theme.text, theme.textSecondary, theme.border, getInitials, itemWidth]);
 
-  const onScroll = useCallback((e: any) => {
-    const offset = e.nativeEvent.contentOffset.x;
-    const index = Math.round(offset / width);
-    if (index !== activeIndex && index >= 0 && index < depoimentos.length) {
-      setActiveIndex(index);
-    }
-  }, [activeIndex]);
+  const onLayout = useCallback((e: any) => {
+    const newWidth = e.nativeEvent.layout.width;
+    setItemWidth(newWidth);
+  }, []);
 
   return (
-    <View style={styles.depoimentosContainer}>
+    <View style={styles.depoimentosContainer} onLayout={onLayout}>
       <Text style={[styles.sectionTitle, { color: theme.text }]}>O que nossos clientes dizem</Text>
       <FlatList
         ref={flatListRef}
         data={depoimentos}
         horizontal
-        pagingEnabled
+        scrollEnabled={false}
         showsHorizontalScrollIndicator={false}
         keyExtractor={(item) => item.id}
         renderItem={renderItem}
-        onScroll={onScroll}
-        scrollEventThrottle={16}
       />
       <View style={styles.depoimentoPagination}>
         {depoimentos.map((_, index) => (
@@ -375,13 +375,13 @@ const styles = StyleSheet.create({
   },
 
   // Looks Carrossel
-  looksCarrosselContainer: { height: 220, marginBottom: 16 },
-  lookItem: { width: width - 32, marginHorizontal: 16, borderRadius: 12, overflow: 'hidden' },
-  lookImage: { width: '100%', height: '100%', resizeMode: 'cover' },
-  looksList: { alignItems: 'center' },
-  looksPagination: { flexDirection: 'row', justifyContent: 'center', marginTop: 8 },
-  looksDot: { width: 6, height: 6, borderRadius: 3, marginHorizontal: 4 },
-  looksDotActive: { width: 12 },
+looksCarrosselContainer: { height: 220, marginBottom: 16 },
+lookItem: { width: Dimensions.get('window').width, height: 220 },
+lookImage: { width: '100%', height: '100%', resizeMode: 'cover' },
+looksList: { paddingHorizontal: -2 },
+looksPagination: { flexDirection: 'row', justifyContent: 'center', marginTop: 8 },
+looksDot: { width: 6, height: 6, borderRadius: 3, marginHorizontal: 4 },
+looksDotActive: { width: 12 },
 
   // Benefícios
   beneficiosContainer: { marginBottom: 16 },
@@ -432,10 +432,9 @@ const styles = StyleSheet.create({
   // Depoimentos
   depoimentosContainer: { marginBottom: 16, paddingHorizontal: 16 },
   depoimentoCard: {
-    width: width -65,
-    marginHorizontal: 16,
+    marginHorizontal: 2,
     borderRadius: 16,
-    padding: 20,
+    padding: 18,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
