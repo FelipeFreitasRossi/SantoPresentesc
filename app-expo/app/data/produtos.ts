@@ -85,16 +85,4 @@ export const produtos: Produto[] = [
     imagemUrl: "https://i.postimg.cc/4xLwRcfj/Blusa-King-Preta.jpg",
     imagensAdicionais: ["https://i.postimg.cc/hvbSwcBS/Detalhe-Frente-Blusa-King.jpg", "https://i.postimg.cc/fTDWdtct/Mensagem-Blusa-King-Preta.jpg"]
   },
-  {
-    id: 17,
-    nome: "Camisa teste Netlify",
-    descricao: "teste",
-    preco: 100.0,
-    categoria: "camisa",
-    estampa: true,
-    
-    tamanhos: ["P", "M", "G", "GG"],
-    imagemUrl: "https://i.postimg.cc/4dt00yz5/Oversized-70x7Preta.jpg",
-    imagensAdicionais: ["https://i.postimg.cc/4dt00yz5/Oversized-70x7Preta.jpg"]
-  },
 ];
