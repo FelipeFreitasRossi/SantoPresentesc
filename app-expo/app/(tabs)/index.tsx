@@ -41,7 +41,7 @@ const categorias = [
   { id: '1', nome: 'Oversized', imagem: 'https://i.postimg.cc/cJ5pzQSh/Oversized-King.jpg', rota: 'oversized' },
   { id: '2', nome: 'Moletons', imagem: 'https://i.postimg.cc/0NhrGKb2/Moletom.jpg', rota: 'moletom' },
   { id: '3', nome: 'Camisas', imagem: 'https://i.postimg.cc/7ZDn2V67/Camisa-Logo-Pai.jpg', rota: 'camisa' },
-  { id: '4', nome: 'Babylooks', imagem: 'https://images.unsplash.com/photo-1522771930-78848d9293e8?w=200&h=200&fit=crop', rota: 'babylook' },
+  { id: '4', nome: 'Babylooks', imagem: 'https://i.postimg.cc/15GcxycS/LOGOBABYLOOK.png', rota: 'babylooks' },
 ];
 
 const LooksCarrossel = memo(() => {

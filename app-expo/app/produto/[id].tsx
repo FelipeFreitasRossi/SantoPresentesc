@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { View, Text, Image, StyleSheet, Pressable, Alert, ScrollView, FlatList } from 'react-native';
 import { useLocalSearchParams, Stack } from 'expo-router';
 import { produtos } from '../data/produtos';
@@ -124,7 +124,11 @@ const styles = StyleSheet.create({
   container: { flex: 1 },
   centered: { flex: 1, justifyContent: 'center', alignItems: 'center' },
   image: { width: '100%', height: 350, resizeMode: 'cover' },
-  miniaturasContainer: { paddingHorizontal: 16, paddingVertical: 8, gap: 8 },
+  miniaturasContainer: {
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    gap: 8,
+  },
   miniatura: {
     width: 70,
     height: 70,
