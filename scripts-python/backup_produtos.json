@@ -112,19 +112,71 @@
     "imagemUrl": "https://i.postimg.cc/4xLwRcfj/Blusa-King-Preta.jpg"
   },
   {
-    "id": 16,
-    "nome": "Camisa Maria",
-    "descricao": "Otima camisa, 100% algodão",
-    "preco": 64.99,
-    "categoria": "camisa",
+    "id": 17,
+    "nome": "Babylook São Miguel Arcanjo – Proteção e Fé",
+    "descricao": "A Babylook São Miguel Arcanjo é uma peça que une elegância, conforto e significado espiritual. Com uma estampa exclusiva de São Miguel Arcanjo, símbolo de proteção, coragem e justiça, esta camiseta é ideal para quem deseja expressar sua fé no dia a dia com estilo.",
+    "preco": 55.9,
+    "categoria": "babylooks",
     "estampa": true,
     "capuz": null,
     "tamanhos": [
-      "P",
-      "M",
+      "G"
+    ],
+    "imagemUrl": "https://i.postimg.cc/PJv1Jjwn/Sao-Miguel-Preta.png"
+  },
+  {
+    "id": 18,
+    "nome": "Babylook Totus Tuus Mariae – Devoção e Elegância",
+    "descricao": "A Babylook Totus Tuus Mariae é uma peça que expressa fé, devoção e estilo em um design elegante e significativo. A frase “Totus Tuus”, tradicional expressão de consagração à Virgem Maria, representa a entrega total e a confiança na intercessão materna de Maria.",
+    "preco": 53.5,
+    "categoria": "babylooks",
+    "estampa": true,
+    "capuz": null,
+    "tamanhos": [
+      "P"
+    ],
+    "imagemUrl": "https://i.postimg.cc/0j9bR10T/TOTUSBranca.png"
+  },
+  {
+    "id": 19,
+    "nome": "Babylook Jesus Cristo – Fé e Estilo",
+    "descricao": "A Babylook Jesus Cristo é uma peça que expressa fé, simplicidade e elegância em um design moderno e significativo. Com uma estampa minimalista que destaca o nome de Jesus Cristo junto ao símbolo da cruz, a camiseta representa devoção e a presença constante da fé no cotidiano.",
+    "preco": 55.9,
+    "categoria": "babylooks",
+    "estampa": true,
+    "capuz": null,
+    "tamanhos": [
       "G",
       "GG"
     ],
-    "imagemUrl": "https://i.postimg.cc/0rgs0Cyq/Guadalupe.jpg"
+    "imagemUrl": "https://i.postimg.cc/VL6kjRG4/Jesus-Cristo-Preta.png"
+  },
+  {
+    "id": 20,
+    "nome": "Babylook Gratidão – Fé e Inspiração",
+    "descricao": "A Babylook Gratidão é uma peça que transmite uma mensagem de fé, esperança e reconhecimento pelas bênçãos do dia a dia. Com um design elegante que destaca a palavra “Gratidão” acompanhada do símbolo da cruz, a camiseta representa uma vida guiada pela fé em Jesus Cristo e pela confiança em Seus caminhos.",
+    "preco": 55.9,
+    "categoria": "babylooks",
+    "estampa": true,
+    "capuz": null,
+    "tamanhos": [
+      "G",
+      "GG"
+    ],
+    "imagemUrl": "https://i.postimg.cc/52JY8vCm/Gratidao-Azul.png"
+  },
+  {
+    "id": 21,
+    "nome": "Babylook “Acaso não sabeis que sou da Imaculada?” – Fé e Devoção",
+    "descricao": "A Babylook “Acaso não sabeis que sou da Imaculada?” é uma peça que expressa devoção e amor à Virgem Maria, inspirada em uma frase marcante associada à espiritualidade mariana. Com uma estampa delicada acompanhada da imagem da Imaculada, a camiseta transmite fé, identidade cristã e significado profundo para quem a veste.",
+    "preco": 55.9,
+    "categoria": "babylooks",
+    "estampa": true,
+    "capuz": null,
+    "tamanhos": [
+      "G",
+      "GG"
+    ],
+    "imagemUrl": "https://i.postimg.cc/c4yrNYXc/Acaso-Preta.png"
   }
 ]

@@ -7,11 +7,10 @@ export const produtos: Produto[] = [
     descricao: "Tecido perfeito e otimo para usar no dia a dia, 100% algodão ",
     preco: 109.99,
     categoria: "oversized",
-    estampa: true,
+    estampa: 1,
     
     tamanhos: ["P", "M", "G", "GG"],
-    imagemUrl: "https://i.postimg.cc/4dt00yz5/Oversized-70x7Preta.jpg",
-    imagensAdicionais: undefined
+    imagemUrl: "https://i.postimg.cc/4dt00yz5/Oversized-70x7Preta.jpg"
   },
   {
     id: 10,
@@ -19,11 +18,10 @@ export const produtos: Produto[] = [
     descricao: "Tecido maravilhoso, 100% algodão, otima para usar no dia a dia",
     preco: 109.99,
     categoria: "oversized",
-    estampa: true,
+    estampa: 1,
     
     tamanhos: ["P", "M", "G", "GG"],
-    imagemUrl: "https://i.postimg.cc/8c4Z86sx/Oversized-God-Is-Good.jpg",
-    imagensAdicionais: undefined
+    imagemUrl: "https://i.postimg.cc/8c4Z86sx/Oversized-God-Is-Good.jpg"
   },
   {
     id: 11,
@@ -31,11 +29,10 @@ export const produtos: Produto[] = [
     descricao: "Camisa Oversized, tecido leve e otimo",
     preco: 109.99,
     categoria: "oversized",
-    estampa: true,
+    estampa: 1,
     
     tamanhos: ["P", "M", "G", "GG"],
-    imagemUrl: "https://i.postimg.cc/VLNRr5d3/Oversized-Sonha-Alto-Branca.jpg",
-    imagensAdicionais: undefined
+    imagemUrl: "https://i.postimg.cc/VLNRr5d3/Oversized-Sonha-Alto-Branca.jpg"
   },
   {
     id: 12,
@@ -43,11 +40,10 @@ export const produtos: Produto[] = [
     descricao: "Moletom otimo com um tecido maravilhoso, leve e otimo para o frio",
     preco: 119.99,
     categoria: "moletom",
-    estampa: true,
-    capuz: true,
+    estampa: 1,
+    capuz: 1,
     tamanhos: ["P", "M", "G", "GG"],
-    imagemUrl: "https://i.postimg.cc/q7GhxXYV/Moletom-Jesus-Is-King-Branca.jpg",
-    imagensAdicionais: ["https://i.postimg.cc/tCk6nHxb/Frente-Blusa-Jesus-Is-King.jpg", "https://i.postimg.cc/5tYQrYkf/Detalhe-Frente-Jesus-Is-King.jpg"]
+    imagemUrl: "https://i.postimg.cc/q7GhxXYV/Moletom-Jesus-Is-King-Branca.jpg"
   },
   {
     id: 13,
@@ -55,11 +51,10 @@ export const produtos: Produto[] = [
     descricao: "Otimo para usar, tecido leve e gostoso, perfeito para o inverno ",
     preco: 119.99,
     categoria: "moletom",
-    estampa: true,
-    capuz: true,
+    estampa: 1,
+    capuz: 1,
     tamanhos: ["P", "M", "G", "GG"],
-    imagemUrl: "https://i.postimg.cc/2SDnd666/Moletom-Sonhe-Alto.jpg",
-    imagensAdicionais: ["https://i.postimg.cc/9frgNbhT/Frente-Blusa-Preta.jpg", "https://i.postimg.cc/Dwzx86mg/Detalhe-Frente-Blusa-Preta.jpg"]
+    imagemUrl: "https://i.postimg.cc/2SDnd666/Moletom-Sonhe-Alto.jpg"
   },
   {
     id: 14,
@@ -67,11 +62,10 @@ export const produtos: Produto[] = [
     descricao: "Otimo para ser usado no inverno, tecido otimo e leve ",
     preco: 119.99,
     categoria: "moletom",
-    estampa: true,
-    capuz: true,
+    estampa: 1,
+    capuz: 1,
     tamanhos: ["P", "M", "G", "GG"],
-    imagemUrl: "https://i.postimg.cc/NF8jQgcv/Moletom-70x7Preta.jpg",
-    imagensAdicionais: ["https://i.postimg.cc/3RxV7hmH/Frente-Blusa70x7Preta.jpg", "https://i.postimg.cc/Px73jwdL/Detalhe-Frente-Blusa-Preta.jpg"]
+    imagemUrl: "https://i.postimg.cc/NF8jQgcv/Moletom-70x7Preta.jpg"
   },
   {
     id: 15,
@@ -79,10 +73,64 @@ export const produtos: Produto[] = [
     descricao: "Moletom da cor preta, tecido otimo e agradavel",
     preco: 109.99,
     categoria: "moletom",
-    estampa: true,
-    capuz: true,
+    estampa: 1,
+    capuz: 1,
     tamanhos: ["P", "M", "G", "GG"],
-    imagemUrl: "https://i.postimg.cc/4xLwRcfj/Blusa-King-Preta.jpg",
-    imagensAdicionais: ["https://i.postimg.cc/hvbSwcBS/Detalhe-Frente-Blusa-King.jpg", "https://i.postimg.cc/fTDWdtct/Mensagem-Blusa-King-Preta.jpg"]
+    imagemUrl: "https://i.postimg.cc/4xLwRcfj/Blusa-King-Preta.jpg"
+  },
+  {
+    id: 17,
+    nome: "Babylook São Miguel Arcanjo – Proteção e Fé",
+    descricao: "A Babylook São Miguel Arcanjo é uma peça que une elegância, conforto e significado espiritual. Com uma estampa exclusiva de São Miguel Arcanjo, símbolo de proteção, coragem e justiça, esta camiseta é ideal para quem deseja expressar sua fé no dia a dia com estilo.",
+    preco: 55.9,
+    categoria: "babylooks",
+    estampa: 1,
+    
+    tamanhos: ["G"],
+    imagemUrl: "https://i.postimg.cc/PJv1Jjwn/Sao-Miguel-Preta.png"
+  },
+  {
+    id: 18,
+    nome: "Babylook Totus Tuus Mariae – Devoção e Elegância",
+    descricao: "A Babylook Totus Tuus Mariae é uma peça que expressa fé, devoção e estilo em um design elegante e significativo. A frase “Totus Tuus”, tradicional expressão de consagração à Virgem Maria, representa a entrega total e a confiança na intercessão materna de Maria.",
+    preco: 53.5,
+    categoria: "babylooks",
+    estampa: 1,
+    
+    tamanhos: ["P"],
+    imagemUrl: "https://i.postimg.cc/0j9bR10T/TOTUSBranca.png"
+  },
+  {
+    id: 19,
+    nome: "Babylook Jesus Cristo – Fé e Estilo",
+    descricao: "A Babylook Jesus Cristo é uma peça que expressa fé, simplicidade e elegância em um design moderno e significativo. Com uma estampa minimalista que destaca o nome de Jesus Cristo junto ao símbolo da cruz, a camiseta representa devoção e a presença constante da fé no cotidiano.",
+    preco: 55.9,
+    categoria: "babylooks",
+    estampa: 1,
+    
+    tamanhos: ["G", "GG"],
+    imagemUrl: "https://i.postimg.cc/VL6kjRG4/Jesus-Cristo-Preta.png"
+  },
+  {
+    id: 20,
+    nome: "Babylook Gratidão – Fé e Inspiração",
+    descricao: "A Babylook Gratidão é uma peça que transmite uma mensagem de fé, esperança e reconhecimento pelas bênçãos do dia a dia. Com um design elegante que destaca a palavra “Gratidão” acompanhada do símbolo da cruz, a camiseta representa uma vida guiada pela fé em Jesus Cristo e pela confiança em Seus caminhos.",
+    preco: 55.9,
+    categoria: "babylooks",
+    estampa: 1,
+    
+    tamanhos: ["G", "GG"],
+    imagemUrl: "https://i.postimg.cc/52JY8vCm/Gratidao-Azul.png"
+  },
+  {
+    id: 21,
+    nome: "Babylook “Acaso não sabeis que sou da Imaculada?” – Fé e Devoção",
+    descricao: "A Babylook “Acaso não sabeis que sou da Imaculada?” é uma peça que expressa devoção e amor à Virgem Maria, inspirada em uma frase marcante associada à espiritualidade mariana. Com uma estampa delicada acompanhada da imagem da Imaculada, a camiseta transmite fé, identidade cristã e significado profundo para quem a veste.",
+    preco: 55.9,
+    categoria: "babylooks",
+    estampa: 1,
+    
+    tamanhos: ["G", "GG"],
+    imagemUrl: "https://i.postimg.cc/c4yrNYXc/Acaso-Preta.png"
   },
 ];
